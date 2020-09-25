@@ -39,6 +39,7 @@ for sublist in list_of_list_of_names_from_timetables:
 
 print(current_pupils)
 
+#make previous_pupils.csv into a list
 with open(previous_pupils, newline='') as f:
     reader = csv.reader(f)
     names_and_emails = list(reader)
@@ -46,12 +47,12 @@ with open(previous_pupils, newline='') as f:
 with open('updated_names_and_emails.csv', mode='w') as updated_names_and_emails:
     pupils_writer = csv.writer(updated_names_and_emails, delimiter= ',' , quotechar = '"', quoting=csv.QUOTE_MINIMAL, lineterminator = '\n')
 
-    for item in current_pupils:
-        matching = [s for s in names_and_emails if item in s]
-        for sublist in matching:
-            x = sublist[0]
-            y = sublist[1]
-            pupils_writer.writerow([x,y])
+    for pupil in current_pupils:
+        #for every name_email in names_and_emails check if the pupil is in the name_email
+        #if yes, return name_email and put in matching list
+        matching = [name_email for name_email in names_and_emails if pupil in name_email]
+        for name_email in matching:
+            pupils_writer.writerow(name_email)
 
 updated_names_and_emails.close()
 print('Your new file is ready! Celebrate with some chocolate!')
